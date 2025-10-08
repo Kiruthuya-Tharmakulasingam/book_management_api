@@ -40,7 +40,10 @@ export const createBook = async (req, res) => {
 // update book
 export const updateBook = async (req, res) => {
   try {
-    const updatedBook = await Book.findByIdAndUpdate(req.params.id);
+    const updatedBook = await Book.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
     if (!updateBook) {
       return res.status(404).json({ error: "book not found" });
     }
@@ -56,7 +59,10 @@ export const updateBook = async (req, res) => {
 export const deleteBook = async (req, res) => {
   try {
     const book = await Book.findByIdAndDelete(req.params.id);
-    res.status(201).json(book);
+    if (!book) {
+      return res.status(404).json({ error: "book not found" });
+    }
+    res.status(201).json({ message: "Book deleted successfully", book });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
