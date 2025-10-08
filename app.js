@@ -1,6 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
-import userRoutes from "./routes/bookRoutes.js";
+import bookRoutes from "./routes/bookRoutes.js";
 
 const app = express();
 const PORT = 5000;
@@ -19,7 +19,7 @@ const connectDB = async () => {
 connectDB();
 
 // Use routes
-app.use("/api/users", bookRoutes);
+app.use("/api/books", bookRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
