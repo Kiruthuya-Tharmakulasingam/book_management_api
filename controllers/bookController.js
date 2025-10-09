@@ -19,6 +19,8 @@ export const getBookById = async (req, res) => {
     }
     res.status(200).json(book);
   } catch (error) {
+    20;
+
     res.status(500).json({ error: error.message });
   }
 };
@@ -26,6 +28,16 @@ export const getBookById = async (req, res) => {
 // create book
 export const createBook = async (req, res) => {
   try {
+    const { title } = req.body;
+
+    // Check for duplicate title
+    const existingBook = await Book.findOne({ title });
+    if (existingBook) {
+      return res
+        .status(400)
+        .json({ error: "Book with this title already exists" });
+    }
+
     const newBook = new Book(req.body);
     const savedBook = await newBook.save();
     res.status(201).json({
