@@ -19,8 +19,6 @@ export const getBookById = async (req, res) => {
     }
     res.status(200).json(book);
   } catch (error) {
-    20;
-
     res.status(500).json({ error: error.message });
   }
 };
